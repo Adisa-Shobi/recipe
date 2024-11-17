@@ -40,6 +40,9 @@ class HomeView extends GetView<HomeController> {
           Spacing.vertical(Spacing.m),
           CustomButton(
             text: "Search Recipes",
+            textStyle: AppTypography.button.copyWith(
+              color: Colors.white,
+            ),
             onPressed: () {
               Get.toNamed(
                 RouteNames.search,

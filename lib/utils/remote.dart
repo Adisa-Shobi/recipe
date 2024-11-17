@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+import 'package:food_app/utils/snack_bar.dart';
 import 'package:http/http.dart' as http;
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:logger/logger.dart';
@@ -152,12 +153,14 @@ class ApiClient {
       } on TimeoutException {
         lastError = ApiException(message: 'Request timed out');
       } on SocketException catch (e) {
-        lastError = ApiException(message: 'Network error: ${e.message}');
+        lastError = ApiException(
+            message: 'Network error: Check your internet connection');
       } on ApiException catch (e) {
         // Don't retry if it's a client error (4xx)
         if (e.statusCode != null &&
             e.statusCode! >= 400 &&
             e.statusCode! < 500) {
+          negativeMessage(message: e.message);
           rethrow;
         }
         lastError = e;
@@ -176,6 +179,7 @@ class ApiClient {
       'Request failed after $maxRetries attempts',
       error: lastError,
     );
+    negativeMessage(message: lastError.message);
     return ApiResponse.error(
       lastError.message,
       statusCode: lastError.statusCode,
