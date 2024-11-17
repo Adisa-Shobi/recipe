@@ -93,125 +93,16 @@ dependencies:
   shimmer: ^3.0.0
 ```
 
-### API Client
+### API Client Usage
 
 ```dart
-class ApiClient {
-  final String baseUrl;
-  final Duration timeout;
-  final Map<String, String> defaultHeaders;
-
-  ApiClient({
-    required this.baseUrl,
-    this.timeout = const Duration(seconds: 30),
-    this.defaultHeaders = const {},
-  });
-
-  Future<ApiResponse<T>> get<T>(
-    String endpoint, {
-    Map<String, String>? headers,
-    Map<String, dynamic>? queryParameters,
-    required T Function(Map<String, dynamic>) fromJson,
-  }) async {
-    // Implementation...
-  }
-}
-```
-
-### Environment Setup
-
-```dart
-class MainController extends GetxController {
-  late final ApiClient apiClient;
-
-  @override
-  Future<void> onInit() async {
-    super.onInit();
-    await dotenv.load(fileName: ".env");
-    
-    apiClient = ApiClient(
-      baseUrl: 'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com',
-      defaultHeaders: {
-        "x-rapidapi-host": dotenv.env['RAPIDAPI_HOST'] ?? '',
-        "x-rapidapi-key": dotenv.env['RAPIDAPI_KEY'] ?? '',
-      },
-    );
-  }
-}
-```
-
-### Recipe Card
-
-```dart
-class RecipeCard extends StatelessWidget {
-  final String imageUrl;
-  final String title;
-  final String description;
-  final String cookTime;
-
-  const RecipeCard({
-    super.key,
-    required this.imageUrl,
-    required this.title,
-    required this.description,
-    required this.cookTime,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: MediaQuery.of(context).size.height * 0.55,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.1),
-            blurRadius: 8,
-            offset: const Offset(0, 2),
-          ),
-        ],
-      ),
-      child: Stack(
-        // Implementation...
-      ),
-    );
-  }
-}
-```
-
-### Skeleton Loading
-
-```dart
-class RecipeCardSkeleton extends StatelessWidget {
-  const RecipeCardSkeleton({
-    super.key,
-    this.height,
-    this.padding,
-    this.borderRadius,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: height ?? MediaQuery.of(context).size.height * 0.55,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: borderRadius ?? BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.1),
-            blurRadius: 8,
-            offset: const Offset(0, 2),
-          ),
-        ],
-      ),
-      child: Shimmer.fromColors(
-        // Implementation...
-      ),
-    );
-  }
-}
+ApiClient(
+    baseUrl: YOUR_BASE_URL,
+    defaultHeaders: {
+      "x-rapidapi-host": dotenv.env['RAPIDAPI_HOST'] ?? '',
+      "x-rapidapi-key": dotenv.env['RAPIDAPI_KEY'] ?? '',
+    },
+  );
 ```
 
 ### Search with Debounce
