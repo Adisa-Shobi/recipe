@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:food_app/controllers/main_controller.dart';
 import 'package:food_app/routes/app_pages.dart';
@@ -8,6 +9,10 @@ import 'package:get/get.dart';
 
 void main() async {
   await dotenv.load(fileName: ".env");
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+  ]);
   runApp(const MyApp());
 }
 
@@ -20,6 +25,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Recipe App',
+      // lock in potrait
       theme: AppTheme.lightTheme,
       initialRoute: RouteNames.home,
       getPages: AppPages.routes,
