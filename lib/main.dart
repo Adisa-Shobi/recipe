@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:food_app/controllers/main_controller.dart';
 import 'package:food_app/routes/app_pages.dart';
 import 'package:food_app/routes/route_names.dart';
 import 'package:food_app/utils/theme.dart';
 import 'package:get/get.dart';
 
-void main() {
+void main() async {
+  await dotenv.load(fileName: ".env");
   runApp(const MyApp());
 }
 
@@ -16,11 +19,13 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Food App',
+      title: 'Recipe App',
       theme: AppTheme.lightTheme,
       initialRoute: RouteNames.home,
       getPages: AppPages.routes,
-      initialBinding: BindingsBuilder(() {}),
+      initialBinding: BindingsBuilder(() {
+        Get.lazyPut(() => MainController());
+      }),
     );
   }
 }

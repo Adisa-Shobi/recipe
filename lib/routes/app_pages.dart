@@ -1,6 +1,9 @@
 // Import your page components and bindings here
+import 'package:food_app/bindings/bindings.dart';
 import 'package:food_app/routes/route_names.dart';
 import 'package:food_app/views/home_view.dart';
+import 'package:food_app/views/recipe_view.dart';
+import 'package:food_app/views/search_view.dart';
 import 'package:get/get.dart';
 
 class AppPages {
@@ -14,7 +17,19 @@ class AppPages {
     GetPage(
       name: RouteNames.home,
       page: () => const HomeView(),
-      // binding: HomeBindings(),
+      binding: HomeBindings(),
     ),
+    GetPage(
+      name: RouteNames.search,
+      page: () => SearchView(),
+      binding: SearchBindings(),
+    ),
+    GetPage(
+      name: RouteNames.recipeInfo,
+      page: () => RecipeView(
+        recipeId: Get.arguments["recipeId"],
+      ),
+      binding: RecipeBindings(),
+    )
   ];
 }
